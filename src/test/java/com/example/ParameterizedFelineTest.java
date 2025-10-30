@@ -27,7 +27,7 @@ public class ParameterizedFelineTest {
     }
 
     @Test
-    public void getKittensWithVariousCounts_ReturnsSameCount() {
+    public void getKittensWithVariousCountsReturnsSameCount() {
         Feline feline = new Feline();
         assertEquals(expected, feline.getKittens(input));
     }

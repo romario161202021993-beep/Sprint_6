@@ -1,5 +1,6 @@
 package com.example;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,36 +15,39 @@ public class LionTest {
     @Mock
     Feline feline;
 
-    @Test
-    public void lionMale_HasMane() throws Exception {
-        Lion lion = new Lion("Самец", feline);
-        assertTrue(lion.doesHaveMane());
+    private Lion lionMale;
+    private Lion lionFemale;
+
+    @Before
+    public void setUp() throws Exception {
+        lionMale = new Lion("Самец", feline);
+        lionFemale = new Lion("Самка", feline);
     }
 
     @Test
-    public void lionFemale_NoMane() throws Exception {
-        Lion lion = new Lion("Самка", feline);
-        assertFalse(lion.doesHaveMane());
+    public void lionMaleHasMane() throws Exception {
+        assertTrue(lionMale.doesHaveMane());
+    }
+
+    @Test
+    public void lionFemaleNoMane() throws Exception {
+        assertFalse(lionFemale.doesHaveMane());
     }
 
     @Test(expected = Exception.class)
-    public void lionInvalidSex_ThrowsException() throws Exception {
+    public void lionInvalidSexThrowsException() throws Exception {
         new Lion("Неизвестно", feline);
     }
 
     @Test
-    public void getKittens_DelegatesToFeline() throws Exception {
-        when(feline.getKittens()).thenReturn(4);
-        Lion lion = new Lion("Самка", feline);
-        assertEquals(4, lion.getKittens());
-        verify(feline).getKittens();
+    public void getKittensDelegatesToFeline() throws Exception {
+        when(feline.getKittens()).thenReturn(1);
+        assertEquals(1, lionFemale.getKittens());
     }
 
     @Test
-    public void getFood_DelegatesToFeline() throws Exception {
-        when(feline.getFood("Хищник")).thenReturn(List.of("Зебра", "Антилопа"));
-        Lion lion = new Lion("Самец", feline);
-        assertEquals(List.of("Зебра", "Антилопа"), lion.getFood());
-        verify(feline).getFood("Хищник");
+    public void getFoodDelegatesToFeline() throws Exception {
+        when(feline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        assertEquals(List.of("Животные", "Птицы", "Рыба"), lionMale.getFood());
     }
 }

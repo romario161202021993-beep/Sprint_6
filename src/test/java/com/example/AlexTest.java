@@ -1,11 +1,13 @@
 package com.example;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 import java.util.Arrays;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AlexTest {
@@ -13,30 +15,31 @@ public class AlexTest {
     @Mock
     Feline feline;
 
+    private Alex alex;
+
+    @Before
+    public void setUp() throws Exception {
+        alex = new Alex(feline);
+    }
+
     @Test
-    public void getKittens_ReturnsZero() throws Exception {
-        Alex alex = new Alex(feline);
+    public void getKittensReturnsZero() {
         assertEquals(0, alex.getKittens());
     }
 
     @Test
-    public void getFriends_ReturnsCorrectList() throws Exception {
-        Alex alex = new Alex(feline);
-        assertTrue(alex.getFriends().containsAll(
-                Arrays.asList("Марти", "Глория", "Мелман")
-        ));
-        assertEquals(3, alex.getFriends().size());
+    public void getFriendsReturnsCorrectList() {
+        List<String> expected = Arrays.asList("Марти", "Глория", "Мелман");
+        assertEquals(expected, alex.getFriends());
     }
 
     @Test
-    public void getPlaceOfLiving_ReturnsZoo() throws Exception {
-        Alex alex = new Alex(feline);
+    public void getPlaceOfLivingReturnsNewYorkZoo() {
         assertEquals("Нью-Йоркский зоопарк", alex.getPlaceOfLiving());
     }
 
     @Test
-    public void constructor_SetsSexToMale() throws Exception {
-        Alex alex = new Alex(feline);
+    public void constructorSetsSexToMale() {
         assertTrue(alex.doesHaveMane());
     }
 }
